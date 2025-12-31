@@ -1,53 +1,73 @@
-﻿# Loan-Default-Prediction-
-Loan Default Prediction Project
-Executive Summary
-We developed a robust, production-ready machine learning system to predict loan repayment risk. Our approach prioritized not just high accuracy, but a deep understanding of the problem, the creation of meaningful behavioral features, and the development of a reliable, well-documented process. This project delivers a practical, explainable risk score.-----
-1. Data Foundation & Feature Engineering
-The project involved merging and analyzing various raw data sources to assess user stability and trustworthiness before a loan application. This step was the most critical, focused on turning raw logs into predictive signals while strictly preventing data leakage (only using information predating the application).Data Sources Utilized:
-●	loan_outcomes: Repayment status (target variable).
-●	gps: Real-world device movement logs.
-●	events: In-app user action logs.
-●	features: 10 masked, pre-built numerical attributes.
-Key Behavioral Features:
-Data Source	What We Extracted	Predictive Rationale
-GPS	Number of signals, average accuracy, speed behavior, provider variety, "last seen" recency	Regular and recent activity is a proxy for stability and active life patterns.
-Events	Total actions, unique screens, session counts, network types, last activity time	High engagement and consistent usage often indicate a more legitimate user.
-Masked Features	All 10 features merged	Integrated to provide additional, though unknown, meaningful signals.
-Post-extraction, datasets were rigorously cleaned, aligned for training/prediction, and missing values were handled using median imputation to preserve information.
-2. Modeling & Performance Assessment
-Using a stratified split, we experimented with several models and determined that Gradient Boosting offered the best predictive power.
-Given the noisy and imbalanced nature of lending data, we relied on sophisticated evaluation metrics beyond simple accuracy:
-●	ROC-AUC: Measures the model's ability to differentiate between risky and safe borrowers.
-●	PR-AUC + F1: Focuses specifically on the model's effectiveness in identifying the minority class (defaulters).
-Core Performance Results:
-●	ROC-AUC achieved a score of 0.61+.
-●	PR-AUC significantly outperformed a naive baseline.
-●	The model reliably distinguishes between good and risky borrowers, providing a meaningful risk layer.
-Key Learnings:
-●	Behavioral Recency was the single most effective predictive factor.
-●	The performance is considered realistic and robust, given the data's inherent noise and the masked nature of some features.
-●	The model creates a valuable, non-financial behavioral risk score ready to be integrated with traditional financial scoring.
-3. Production Readiness
+# Loan Default Prediction 🚀
 
-The project's output is structured for immediate real-world use: Prediction CSV
+## Executive Summary
+We developed a robust, production-ready machine learning system to predict loan repayment risk.  
+Our approach prioritized not just high accuracy, but a deep understanding of the problem, the creation of meaningful behavioral features, and the development of a reliable, well-documented process.  
+This project delivers a practical, explainable risk score.
 
+---
+
+## 1. Data Foundation & Feature Engineering
+
+The project involved merging and analyzing various raw data sources to assess user stability and trustworthiness before a loan application.  
+This step was the most critical, focused on turning raw logs into predictive signals while strictly preventing **data leakage** (only using information predating the application).
+
+### Data Sources Utilized
+- **loan_outcomes**: Repayment status (target variable)  
+- **gps**: Real-world device movement logs  
+- **events**: In-app user action logs  
+- **features**: 10 masked, pre-built numerical attributes  
+
+### Key Behavioral Features
+
+| Data Source   | What We Extracted | Predictive Rationale |
+|---------------|------------------|----------------------|
+| **GPS**       | Number of signals, average accuracy, speed behavior, provider variety, "last seen" recency | Regular and recent activity is a proxy for stability and active life patterns |
+| **Events**    | Total actions, unique screens, session counts, network types, last activity time | High engagement and consistent usage often indicate a more legitimate user |
+| **Masked Features** | All 10 features merged | Integrated to provide additional, though unknown, meaningful signals |
+
+**Data Cleaning & Preprocessing**
+- Rigorous dataset alignment for training/prediction  
+- Missing values handled via **median imputation** to preserve information  
+
+---
+
+## 2. Modeling & Performance Assessment
+
+We experimented with several models using a stratified split and determined that **Gradient Boosting** offered the best predictive power.
+
+### Evaluation Metrics
+Given the noisy and imbalanced nature of lending data, we relied on sophisticated metrics beyond simple accuracy:
+- **ROC-AUC**: Differentiates between risky and safe borrowers  
+- **PR-AUC + F1**: Focuses on effectiveness in identifying the minority class (defaulters)  
+
+### Core Performance Results
+- ROC-AUC achieved **0.61+**  
+- PR-AUC significantly outperformed a naive baseline  
+- Model reliably distinguishes between good and risky borrowers, providing a meaningful risk layer  
+
+### Key Learnings
+- **Behavioral Recency** was the single most effective predictive factor  
+- Performance is realistic and robust given data noise and masked features  
+- Model creates a valuable **non-financial behavioral risk score** ready to integrate with traditional financial scoring  
+
+---
+
+## 3. Production Readiness
+
+The project output is structured for immediate real-world use.
+
+### Prediction CSV
 A clean output file ready for downstream analysis:
-user_id | application_at | prediction_probability
- Live Scoring API (FastAPI)
+
+
+user_id  application_at  prediction_probability
+
+### Live Scoring API (FastAPI)
 A simulation of a real-time credit engine:
-●	Input: user_id, application_at
-●	Process: Pulls data, dynamically rebuilds features, preprocesses, and loads the trained model.
-●	Output: Returns the repayment probability (e.g., {"prediction_probability": 0.35}).
-Conclusion: Realistic and Production-Ready
-
-This project successfully demonstrates the capability to:
-●	Integrate and process diverse, raw data streams.
-●	Securely develop robust temporal and behavioral features.
-●	Train practical, well-performing models.
-●	Adopt an engineering mindset focused on APIs and deployment.
-●	Document and explain all methodologies clearly.
-This is a great foundation—realistic and designed for production deployment.
-
-While I have used AI tools for coding speed and organization, all core reasoning, feature ideation, strategic decisions, and validation methodologies were done by me.
+- **Input**: `user_id`, `application_at`  
+- **Process**: Pulls data, dynamically rebuilds features, preprocesses, and loads the trained model  
+- **Output**: Returns repayment probability  
+  ```json
 
 
