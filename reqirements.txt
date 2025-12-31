@@ -1,0 +1,8 @@
+sqlalchemy 
+numpy
+pandas
+matplotlib
+scikit-learn
+requests
+fastapi 
+uvicorn
